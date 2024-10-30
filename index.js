@@ -2,6 +2,8 @@ const express = require("express");
 
 const app = express();
 
+const apiRouter = require("./router/apiRouter");
+
 // Logging Middleware
 app.use(function (req, res, next) {
   console.log(request.url);
@@ -19,10 +21,11 @@ app.use(function (req, res, next) {
       return res.end(file.toString());
     } catch (e) {
       return res.status(404).end("Image not found");
-      next();
     }
   }
   next();
 });
+
+app.use(apiRouter);
 
 app.listen(3000, () => console.log("Listening on port 3000"));
