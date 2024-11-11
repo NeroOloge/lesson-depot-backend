@@ -1,12 +1,14 @@
 const express = require("express");
+const cors = require("cors");
+const apiRouter = require("./router/apiRouter");
 
 const app = express();
 
-const apiRouter = require("./router/apiRouter");
+app.use(cors());
 
 // Logging Middleware
 app.use(function (req, res, next) {
-  console.log(request.url);
+  console.log(req.url);
   next();
 });
 
