@@ -4,6 +4,8 @@ const apiRouter = require("./router/apiRouter");
 
 const app = express();
 
+app.use(express.json());
+
 app.use(cors());
 
 // Logging Middleware
