@@ -26,10 +26,24 @@ router.get("/search", function (req, res, next) {
 
   const lessons = db.collection("lessons").find({
     $or: [
-      { subject: { $regex: `${searchTerm}` } },
-      { location: { $regex: `${searchTerm}` } },
-      { price: { $regex: `${searchTerm}` } },
-      { spaces: { $regex: `${searchTerm}` } },
+      { subject: { $regex: `${searchTerm}`, $options: "i" } },
+      { location: { $regex: `${searchTerm}`, $options: "i" } },
+      {
+        $expr: {
+          $regexMatch: {
+            input: { $toString: "$price" },
+            regex: `${searchTerm}`,
+          },
+        },
+      },
+      {
+        $expr: {
+          $regexMatch: {
+            input: { $toString: "$spaces" },
+            regex: `${searchTerm}`,
+          },
+        },
+      },
     ],
   });
   lessons.toArray().then((results) => res.json(results));
